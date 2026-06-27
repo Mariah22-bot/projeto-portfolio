@@ -1,0 +1,79 @@
+@theme {
+  /* Cores Base (Minimalistas) */
+  --color-background: hsl(0, 0%, 100%);
+  --color-surface: hsl(0, 0%, 96%);
+  
+  /* Efeitos de Brilho (Glow) para os Hotspots */
+  --color-glow-eye: hsl(180, 100%, 70%);     /* Tom ciano/neon sutil */
+  --color-glow-mouth: hsl(340, 100%, 75%);   /* Tom rosa/comunicação */
+  --color-glow-hair: hsl(280, 100%, 70%);    /* Tom roxo/criatividade */
+
+  /* Tipografia */
+  --font-display: "Ubuntu", sans-serif;
+  
+  /* Animações Customizadas para a UI Interativa */
+  --animate-pulse-glow: pulseGlow 2s infinite ease-in-out;
+  --animate-float: float 4s infinite ease-in-out;
+}
+
+/* Importação das Fontes */
+@font-face {
+  font-family: "Ubuntu";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/ubuntu-regular-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/ubuntu-medium-500.woff2") format("woff2");
+}
+
+/* Animações nativas via Keyframes */
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px var(--color-glow-eye));
+  }
+  50% {
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 8px var(--color-glow-eye));
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Estilos Globais e Acessibilidade */
+body {
+  font-family: var(--font-display);
+  background-color: var(--color-background);
+  color: hsl(0, 0%, 10%);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Reset sutil para garantir foco visível na navegação por teclado */
+*:focus-visible {
+  outline: 2px solid var(--color-glow-eye);
+  outline-offset: 4px;
+}
+
+/* Respeito à preferência de redução de movimento do usuário */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
