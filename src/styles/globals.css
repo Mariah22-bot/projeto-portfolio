@@ -1,16 +1,21 @@
+@import "tailwindcss";
+
 @theme {
   /* Cores Base (Minimalistas) */
-  --color-background: hsl(0, 0%, 100%);
-  --color-surface: hsl(0, 0%, 96%);
-  
+  --color-background: #EFD9C7;
+  --color-surface: #EFD9C7;
+
   /* Efeitos de Brilho (Glow) para os Hotspots */
-  --color-glow-eye: hsl(180, 100%, 70%);     /* Tom ciano/neon sutil */
-  --color-glow-mouth: hsl(340, 100%, 75%);   /* Tom rosa/comunicação */
-  --color-glow-hair: hsl(280, 100%, 70%);    /* Tom roxo/criatividade */
+  --color-glow-eye: hsl(180, 100%, 70%);
+  /* Tom ciano/neon sutil */
+  --color-glow-mouth: hsl(340, 100%, 75%);
+  /* Tom rosa/comunicação */
+  --color-glow-hair: hsl(280, 100%, 70%);
+  /* Tom roxo/criatividade */
 
   /* Tipografia */
   --font-display: "Ubuntu", sans-serif;
-  
+
   /* Animações Customizadas para a UI Interativa */
   --animate-pulse-glow: pulseGlow 2s infinite ease-in-out;
   --animate-float: float 4s infinite ease-in-out;
@@ -35,10 +40,13 @@
 
 /* Animações nativas via Keyframes */
 @keyframes pulseGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     filter: drop-shadow(0 0 2px var(--color-glow-eye));
   }
+
   50% {
     transform: scale(1.02);
     filter: drop-shadow(0 0 8px var(--color-glow-eye));
@@ -46,8 +54,15 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 /* Estilos Globais e Acessibilidade */
@@ -67,7 +82,10 @@ body {
 
 /* Respeito à preferência de redução de movimento do usuário */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+
+  *,
+  ::before,
+  ::after {
     animation-delay: -1ms !important;
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
