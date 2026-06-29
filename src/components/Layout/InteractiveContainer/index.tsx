@@ -3,6 +3,9 @@ import imagemCentral from "../../../assets/images/imagem-central.png";
 
 export const InteractiveContainer: React.FC = () => {
     const [hintActive, setHintActive] = useState(false);
+    const [isHairHovered, setIsHairHovered] = useState(false);
+    const [isEyeHovered, setIsEyeHovered] = useState(false);
+    const [isMouthHovered, setIsMouthHovered] = useState(false);
 
     // Ativa a indicação sutil de interação (piscada/brilho) após 3 segundos
     useEffect(() => {
@@ -13,193 +16,408 @@ export const InteractiveContainer: React.FC = () => {
     }, []);
 
     return (
-        <main className="flex min-h-screen w-full items-center justify-center bg-background p-0 overflow-hidden">
+        <main className="flex min-h-screen w-full items-center justify-center bg-(--color-background) p-4 md:p-8 overflow-hidden">
 
-            {/* Container Principal da Ilustração */}
-            <div className=
-                "relative inline-block w-full max-w-150 max-h-[85vh] animate-fade-in"
-            >
+            {/* Container Pai: Limita o tamanho máximo na tela */}
+            <div className="w-full max-w-150 aspect-square max-h-[85vh] animate-fade-in">
 
-                {/* A Imagem de Fundo Protagonista */}
-                <img
-                    src={imagemCentral}
-                    alt="Ilustração interativa estilo Cyberpunk de uma mulher com traços futuristas e brincos de neon brilhantes"
-                    className=
-                    "w-full h-auto block pointer-events-none select-none rounded-2xl"
-                />
-
-                {/* ------------------------------------------------------------- */}
-                {/* CAMADA DE HOTSPOTS (Navigation as UI) */}
-                {/* As posições em % foram estimadas com base na anatomia da arte */}
-                {/* ------------------------------------------------------------- */}
-
-                {/* Hotspot: Olho Esquerdo -> Sobre */}
-                <a
-                    href="/about"
-                    className="absolute top-[57.5%] left-[30%] w-[18%] 
-                    cursor-pointer group focus-visible:outline-none z-10"
-                    aria-label="Ir para a página Sobre Mim (Olho Esquerdo)"
-                    title="Sobre Mim"
+                <svg
+                    viewBox="0 0 1000 1000"
+                    className="w-full h-full select-none"
                 >
-                    <svg
-                        viewBox="0 0 100 50"
-                        className={`w-full h-full fill-none transition-all duration-500 
-                        scale-x-[-1] 
-                        group-hover:scale-x-[-1.1] 
-                        group-hover:scale-y-[1.1]
-                        filter-[drop-shadow(0_0_2px_var(--color-glow-eye))] 
-                        group-hover:filter-[drop-shadow(0_0_12px_var(--color-glow-eye))]
-                        ${hintActive ? "animate-float" : ""}`}
+                    {/* 1. A SUA ILUSTRAÇÃO COMO BASE DO SVG */}
+                    <image
+                        href={imagemCentral}
+                        width="1000"
+                        height="1000"
+                        className="rounded-2xl"
+                    />
+
+                    {/* ------------------------------------------------------------- */}
+                    {/* HOTSPOT DA BOCA (CONTATO) */}
+                    {/* ------------------------------------------------------------- */}
+                    <a href="/contact" className="group cursor-pointer focus-visible:outline-none"
+                        onMouseEnter={() => setIsMouthHovered(true)}
+                        onMouseLeave={() => setIsMouthHovered(false)}
+                    >
+                        {/* 
+                          Mudança: Adicionado 'group-hover:scale-110' e ajustado origin para o centro exato [493px_740px]
+                          para expandir suavemente sem deslocar para os lados.
+                        */}
+                        <g
+                            className={`fill-none transition-all duration-500 origin-[493px_740px] group-hover:scale-110
+                            filter-[drop-shadow(0_0_4px_var(--color-glow-mouth))] 
+                            group-hover:filter-[drop-shadow(0_0_20px_var(--color-glow-mouth))]
+                            translate-x-3
+                            translate-y-8
+
+                            ${hintActive ? "animate-float" : ""}`}
+                        >
+                            {/* Área interna invisível para clique total */}
+                            <path
+                                d="M 420,730 
+                                   C 440,715 465,700 485,710 
+                                   C 492,713 496,713 502,710 
+                                   C 522,700 547,715 567,730 
+                                   C 577,734 577,738 567,741 
+                                   C 548,748 526,770 493,770 
+                                   C 460,770 438,748 420,741 
+                                   C 410,738 410,734 420,730 
+                                   Z"
+                                fill="transparent"
+                                className="cursor-pointer"
+                            />
+                            {/* Contorno Neon dos Lábios */}
+                            <path
+                                d="M 420,730 
+                                    C 440,715 465,700 485,710 
+                                    C 492,713 496,713 502,710 
+                                    C 522,700 547,715 567,730 
+                                    C 577,734 577,738 567,741 
+                                    C 548,748 526,770 493,770 
+                                    C 460,770 438,748 420,741 
+                                    C 410,738 410,734 420,730 
+                                    Z"
+                                stroke="var(--color-glow-mouth)"
+                                strokeWidth="5"
+                                className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M 422,734 
+                                    C 455,730 480,740 493,737 
+                                    C 505,740 530,730 565,734"
+                                stroke="var(--color-glow-mouth)"
+                                strokeWidth="2"
+                                className="opacity-20 group-hover:opacity-80 transition-opacity duration-500"
+                            />
+                        </g>
+                    </a>
+
+                    {/* ------------------------------------------------------------- */}
+                    {/* HOTSPOT DO OLHO ESQUERDO (SOBRE MIM)                          */}
+                    {/* ------------------------------------------------------------- */}
+                    <a href="/about" className="group cursor-pointer focus-visible:outline-none"
+                        onMouseEnter={() => setIsEyeHovered(true)}
+                        onMouseLeave={() => setIsEyeHovered(false)}
+                    >
+                        {/* 
+                          Mudança: Adicionado 'group-hover:scale-110' e corrigido origin para [365px_577px] 
+                          (o centro da massa do olho esquerdo).
+                        */}
+                        <g
+                            className={`fill-none transition-all duration-500 origin-[365px_577px] group-hover:scale-110
+                            filter-[drop-shadow(0_0_4px_var(--color-glow-eye))] 
+                            group-hover:filter-[drop-shadow(0_0_20px_var(--color-glow-eye))]
+                            translate-x-6
+                            translate-y-4.5
+
+                            ${hintActive ? "animate-float" : ""}`}
+                        >
+                            {/* Área interna invisível para clique total */}
+                            <path
+                                d="M 435,595 
+                                   C 415,575 375,560 340,565 
+                                   C 320,567 305,563 295,555 
+                                   C 310,587 325,587 325,595
+                                   C 365,618 410,615 435,595 Z"
+                                fill="transparent"
+                                className="cursor-pointer"
+                            />
+                            {/* Desenho do Olho Esquerdo */}
+                            <path
+                                d="M 435,595 
+                                    C 415,575 375,560 340,565 
+                                    C 320,567 305,563 295,555 
+                                    C 300,568 315,586 335,590
+                                    C 370,596 410,600 435,595 
+                                    Z"
+                                stroke="var(--color-glow-eye)"
+                                strokeWidth="5"
+                                className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M 435,595 
+                                    C 410,615 365,618 325,595 
+                                    C 310,587 295,555 295,555"
+                                stroke="var(--color-glow-eye)"
+                                strokeWidth="3"
+                                className="opacity-30 group-hover:opacity-90 transition-opacity duration-500"
+                                strokeLinecap="round"
+                            />
+                        </g>
+                    </a>
+
+                    {/* HOTSPOT DO OLHO DIREITO (SOBRE MIM) */}
+
+                    <a href="/about" className="group cursor-pointer focus-visible:outline-none"
+                        onMouseEnter={() => setIsEyeHovered(true)}
+                        onMouseLeave={() => setIsEyeHovered(false)}
+                    >
+                        <g className={hintActive ? "animate-float" : ""}>
+                            <g
+                                className={`fill-none transition-all duration-500 origin-[365px_577px] group-hover:scale-110
+                                scale-x-[-1]
+                                group-hover:scale-x-[-1.1] 
+                                group-hover:scale-y-[1.1]
+                                filter-[drop-shadow(0_0_4px_var(--color-glow-eye))] 
+                                group-hover:filter-[drop-shadow(0_0_20px_var(--color-glow-eye))]
+                                translate-x-52
+                                translate-y-5.5
+
+                                ${hintActive ? "animate-float" : ""}`}
+                            >
+                                {/* Área interna invisível para clique total */}
+
+                                <path
+                                    d="M 435,595 
+                                       C 415,575 375,560 340,565 
+                                       C 320,567 305,563 295,555 
+                                       C 310,587 325,587 325,595
+                                       C 365,618 410,615 435,595 Z"
+                                    fill="transparent"
+                                    className="cursor-pointer"
+                                />
+
+                                {/* Desenho do Olho Direito */}
+                                <path
+                                    d="M 435,595 
+                                        C 415,575 375,560 340,565 
+                                        C 320,567 305,563 295,555 
+                                        C 300,568 315,586 335,590
+                                        C 370,596 410,600 435,595 
+                                        Z"
+                                    stroke="var(--color-glow-eye)"
+                                    strokeWidth="5"
+                                    className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                                <path
+                                    d="M 435,595 
+                                        C 410,615 365,618 325,595 
+                                        C 310,587 295,555 295,555"
+                                    stroke="var(--color-glow-eye)"
+                                    strokeWidth="3"
+                                    className="opacity-30 group-hover:opacity-90 transition-opacity duration-500"
+                                    strokeLinecap="round"
+                                />
+                            </g>
+                        </g>
+
+                    </a>
+
+                    {/* HOTSPOT DO CACHO DE CABELO CENTRAL (PROJETOS) */}
+
+                    <a href="/projects" className="group cursor-pointer focus-visible:outline-none"
+                        onMouseEnter={() => setIsHairHovered(true)}
+                        onMouseLeave={() => setIsHairHovered(false)}
                     >
 
-                        {/* 1. Traçado do Delineado Superior (Estilo Gatinho / Fox Eyes) */}
-                        <path
-                            d="M 5,28 
-                               C 15,18 35,10 65,13 
-                               C 78,14 88,12 95,8 
-                               C 92,15 82,24 68,26
-                               C 45,29 20,31 5,28 Z"
-                            stroke="var(--color-glow-eye)"
-                            strokeWidth="2"
-                            className="opacity-40 group-hover:opacity-100 
-                            transition-opacity 
-                            duration-500
-                            "
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
+                        <g
+                            className={`fill-none transition-all duration-500 origin-[485px_130px] group-hover:scale-110
+                            filter-[drop-shadow(0_0_4px_var(--color-glow-hair))] 
+                            group-hover:filter-[drop-shadow(0_0_20px_var(--color-glow-hair))]
+                            translate-x-3
+                            translate-y-3
 
-                        {/* 2. Traçado da Pálpebra Inferior e Linha D'água */}
-                        <path
-                            d="M 5,28 
-                               C 22,38 52,40 78,28 
-                               C 88,24 95,8 95,8"
-                            stroke="var(--color-glow-eye)"
-                            strokeWidth="1.5"
-                            className="opacity-30 group-hover:opacity-90 transition-opacity duration-500"
-                            strokeLinecap="round"
-                        />
-                    </svg>
-                </a>
+                            ${hintActive ? "animate-float" : ""}`}
+                        >
+                            {/* O Cacho ondulado visível */}
+                            <path
+                                d="M 490,260 
+                                    C 440,240 430,220 490,210 
+                                    C 550,200 540,190 480,180 
+                                    C 420,170 430,160 490,150 
+                                    C 550,140 540,130 480,120
+                                    C 420,110 430,100 490,90
+                                    C 550,80 540,70 480,60
+                                    C 420,50 430,40 490,30
+                                    C 545,20 540,10 492,2"
+                                stroke="var(--color-glow-hair)"
+                                strokeWidth="6"
+                                className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
 
-                {/* Hotspot: Olho Direito -> Sobre */}
-                <a
-                    href="/about"
-                    className="absolute top-[57.5%] left-[54%] w-[18%] 
-                    cursor-pointer group focus-visible:outline-none z-10"
-                    aria-label="Ir para a página Sobre Mim (Olho Direito)"
-                    title="Sobre Mim"
-                >
-                    <svg
-                        viewBox="0 0 100 50"
-                        className={`w-full h-full fill-none transition-all duration-500 
-                        group-hover:scale-110 
-                        filter-[drop-shadow(0_0_2px_var(--color-glow-eye))] 
-                        group-hover:filter-[drop-shadow(0_0_12px_var(--color-glow-eye))]
-                        ${hintActive ? "animate-float" : ""}`}
+                            {/* Área de clique invisível espessa */}
+                            <path
+                                d="M 490,260 
+                                    C 440,240 430,220 490,210 
+                                    C 550,200 540,190 480,180 
+                                    C 420,170 430,160 490,150 
+                                    C 550,140 540,130 480,120 
+                                    C 420,110 430,100 490,90 
+                                    C 550,80 540,70 480,60 
+                                    C 420,50 430,40 490,30 
+                                    C 545,20 540,10 492,2"
+                                stroke="transparent"
+                                strokeWidth="40"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="cursor-pointer"
+                            />
+                        </g>
+                    </a>
+
+                    {/* ------------------------------------------------------------- */}
+                    {/* HOTSPOT DO CACHO DE CABELO ESQUERDO (DIAGONAL) */}
+                    {/* ------------------------------------------------------------- */}
+                    <a href="/projects-left" className="group cursor-pointer focus-visible:outline-none"
+                        onMouseEnter={() => setIsHairHovered(true)}
+                        onMouseLeave={() => setIsHairHovered(false)}
                     >
+                        {/* Camada de animação contínua (Pulso) */}
+                        <g className={hintActive ? "animate-float" : ""}>
+                            {/* Camada de Zoom e Posicionamento: */}
+                            <g
+                                className="fill-none transition-all duration-500 origin-[485px_260px] group-hover:scale-110
+                                filter-[drop-shadow(0_0_4px_var(--color-glow-hair))] 
+                                group-hover:filter-[drop-shadow(0_0_20px_var(--color-glow-hair))]
+                                rotate-[-32deg] 
+                                -translate-x-12 
+                                translate-y-5"
+                            >
+                                {/* O Cacho ondulado visível (Mesmo caminho D) */}
+                                <path
+                                    d="M 490,260 
+                                        C 440,240 430,220 490,210 
+                                        C 550,200 540,190 480,180 
+                                        C 420,170 430,160 490,150 
+                                        C 550,140 540,130 480,120 
+                                        C 420,110 430,100 490,90 
+                                        C 550,80 540,70 480,60 
+                                        C 420,50 430,40 490,30 
+                                        C 545,20 540,10 492,2"
+                                    stroke="var(--color-glow-hair)"
+                                    strokeWidth="6"
+                                    className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                                {/* Área de clique invisível espessa */}
+                                <path
+                                    d="M 490,260 
+                                        C 440,240 430,220 490,210 
+                                        C 550,200 540,190 480,180 
+                                        C 420,170 430,160 490,150 
+                                        C 550,140 540,130 480,120 
+                                        C 420,110 430,100 490,90 
+                                        C 550,80 540,70 480,60 
+                                        C 420,50 430,40 490,30 
+                                        C 545,20 540,10 492,2"
+                                    stroke="transparent"
+                                    strokeWidth="40"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="cursor-pointer"
+                                />
+                            </g>
+                        </g>
+                    </a>
 
-                        {/* 1. Traçado do Delineado Superior (Estilo Gatinho / Fox Eyes) */}
-                        <path
-                            d="M 5,28 
-                               C 15,18 35,10 65,13 
-                               C 78,14 88,12 95,8 
-                               C 92,15 82,24 68,26
-                               C 45,29 20,31 5,28 Z"
-                            stroke="var(--color-glow-eye)"
-                            strokeWidth="2"
-                            className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-
-                        {/* 2. Traçado da Pálpebra Inferior e Linha D'água */}
-                        <path
-                            d="M 5,28 
-                               C 22,38 52,40 78,28 
-                               C 88,24 95,8 95,8"
-                            stroke="var(--color-glow-eye)"
-                            strokeWidth="1.5"
-                            className="opacity-30 group-hover:opacity-90 transition-opacity duration-500"
-                            strokeLinecap="round"
-                        />
-
-                    </svg>
-                </a>
-
-                {/* Hotspot: Boca -> Contato */}
-                <a
-                    href="/contact"
-                    className=
-                    "absolute top-[73%] left-[42.3%] w-[18%] cursor-pointer group focus-visible:outline-none z-10"
-
-                    aria-label="Ir para a página de Contato (Boca)"
-                    title="Contato"
-                >
-                    {/* O SVG desenha o contorno exato sobre a boca */}
-                    <svg
-                        viewBox="0 0 100 50"
-                        className={
-                            `w-full h-full fill-none transition-all duration-500 
-                                    group-hover:scale-110 
-                                    filter-[drop-shadow(0_0_2px_var(--color-glow-mouth))] 
-                                    group-hover:filter-[drop-shadow(0_0_12px_var(--color-glow-mouth))]
-
-                                    ${hintActive ? "animate-float" : ""}`
-                        }
+                    {/* ------------------------------------------------------------- */}
+                    {/* HOTSPOT DO CACHO DE CABELO DIREITO (DIAGONAL)                 */}
+                    {/* ------------------------------------------------------------- */}
+                    <a href="/projects-right" className="group cursor-pointer focus-visible:outline-none"
+                        onMouseEnter={() => setIsHairHovered(true)}
+                        onMouseLeave={() => setIsHairHovered(false)}
                     >
-                        {/* Contorno Neon Translúcido dos Lábios */}
-                        <path
-                            d="M 5,23 
-                                C 15,14 30,5 42,12 
-                                C 46,14 48,14 52,12 
-                                C 64,5 79,14 89,23 
-                                C 95,25 95,27 89,29 
-                                C 78,33 66,45 47,45 
-                                C 28,45 16,33 5,29 
-                                C -1,27 -1,25 5,23 Z"
-                            stroke="var(--color-glow-mouth)"
-                            strokeWidth="2"
-                            className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
+                        {/* Camada de animação contínua (Pulso) */}
+                        <g className={hintActive ? "animate-float" : ""}>
+                            {/* Camada de Zoom e Posicionamento: */}
+                            <g
+                                className="fill-none transition-all duration-500 origin-[485px_260px] group-hover:scale-110
+                                filter-[drop-shadow(0_0_4px_var(--color-glow-hair))] 
+                                group-hover:filter-[drop-shadow(0_0_20px_var(--color-glow-hair))]
+                                rotate-32 
+                                translate-x-20 
+                                translate-y-5"
+                            >
+                                {/* O Cacho ondulado visível (Mesmo caminho D) */}
+                                <path
+                                    d="M 490,260 
+                                        C 440,240 430,220 490,210 
+                                        C 550,200 540,190 480,180 
+                                        C 420,170 430,160 490,150 
+                                        C 550,140 540,130 480,120 
+                                        C 420,110 430,100 490,90 
+                                        C 550,80 540,70 480,60 
+                                        C 420,50 430,40 490,30 
+                                        C 545,20 540,10 492,2"
+                                    stroke="var(--color-glow-hair)"
+                                    strokeWidth="6"
+                                    className="opacity-40 group-hover:opacity-100 transition-opacity duration-500"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                </path>
+                                {/* Área de clique invisível espessa */}
+                                <path
+                                    d="M 490,260 
+                                        C 440,240 430,220 490,210 
+                                        C 550,200 540,190 480,180 
+                                        C 420,170 430,160 490,150 
+                                        C 550,140 540,130 480,120 
+                                        C 420,110 430,100 490,90 
+                                        C 550,80 540,70 480,60 
+                                        C 420,50 430,40 490,30 
+                                        C 545,20 540,10 492,2"
+                                    stroke="transparent"
+                                    strokeWidth="40"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="cursor-pointer"
+                                />
+                            </g>
+                        </g>
+                    </a>
 
-                        {/* Linha Central sutil dos Lábios para dar profundidade cyberpunk */}
-                        <path
-                            d="M 6,25 C 25,23 40,29 47,27 C 54,29 69,23 88,25"
-                            stroke="var(--color-glow-mouth)"
-                            strokeWidth="1"
-                            className="opacity-20 group-hover:opacity-80 transition-opacity duration-500"
-                        />
-                    </svg>
-                </a>
+                    {/* Texto dinâmico que aparece ao passar o mouse em qualquer cacho */}
+                    <text
+                        x="500" // Centralizado horizontalmente
+                        y="260" // Posicionado verticalmente
+                        textAnchor="middle" // Garante o alinhamento centralizado perfeito a partir do ponto X
+                        className={`font-sans font-thin text-[150px]  tracking-widest uppercase transition-all duration-500 select-none pointer-events-none
+                        fill-glow-textHair
+                        filter-[drop-shadow(0_0_25px_#fff)_drop-shadow(0_0_25px_#fff)_drop-shadow(0_0_25px_#fff)]
+                        ${isHairHovered ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-2 scale-95"}`}
+                    >
+                        Projetos
+                    </text>
 
-                {/* Hotspot: Fio de Cabelo Esquerdo -> Projetos */}
-                <a
-                    href="/projects"
-                    className="absolute top-[6%] left-[29%] w-[12%] h-[22%] rounded-full rotate-[-15deg] cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_var(--color-glow-hair)] focus-visible:ring-2 focus-visible:ring-glow-hair"
-                    aria-label="Ir para a página de Projetos (Fio de Cabelo Esquerdo)"
-                    title="Meus Projetos"
-                />
+                    <text
+                        x="510" // Centralizado horizontalmente
+                        y="640" // Posicionado verticalmente
+                        textAnchor="middle"
+                        // Garante o alinhamento centralizado perfeito a partir do ponto X
+                        className={`font-sans font-thin text-[150px]  tracking-widest uppercase transition-all duration-500 select-none pointer-events-none
+                        fill-glow-textEye
+                        filter-[drop-shadow(0_0_25px_#fff)_drop-shadow(0_0_25px_#fff)_drop-shadow(0_0_25px_#fff)]
+                        ${isEyeHovered ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-2 scale-95"}`}
+                    >
+                        Sobre
+                    </text>
 
-                {/* Hotspot: Fio de Cabelo Central -> Projetos */}
-                <a
-                    href="/projects"
-                    className="absolute top-[2%] left-[46%] w-[9%] h-[24%] rounded-full cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_var(--color-glow-hair)] focus-visible:ring-2 focus-visible:ring-glow-hair"
-                    aria-label="Ir para a página de Projetos (Fio de Cabelo Central)"
-                    title="Meus Projetos"
-                />
+                    <text
+                        x="510" // Centralizado horizontalmente
+                        y="830" // Posicionado verticalmente
+                        textAnchor="middle"
+                        // Garante o alinhamento centralizado perfeito a partir do ponto X
+                        className={`font-sans font-thin text-[150px] tracking-widest uppercase transition-all duration-500 select-none pointer-events-none
+                        fill-glow-textMouth
+                        filter-[drop-shadow(0_0_25px_#fff)_drop-shadow(0_0_25px_#fff)_drop-shadow(0_0_25px_#fff)]
+                        ${isMouthHovered ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-2 scale-95"}`}
+                    >
+                        Contatos
+                    </text>
 
-                {/* Hotspot: Fio de Cabelo Direito -> Projetos */}
-                <a
-                    href="/projects"
-                    className="absolute top-[5%] left-[58%] w-[13%] h-[22%] rounded-full rotate-15 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_var(--color-glow-hair)] focus-visible:ring-2 focus-visible:ring-glow-hair"
-                    aria-label="Ir para a página de Projetos (Fio de Cabelo Direito)"
-                    title="Meus Projetos"
-                />
-
+                </svg>
             </div>
-        </main >
+        </main>
     );
 };

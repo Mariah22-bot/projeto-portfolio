@@ -7,10 +7,16 @@
 
   /* Efeitos de Brilho (Glow) para os Hotspots */
   --color-glow-eye: hsl(180, 100%, 70%);
+  --color-glow-textEye: hsl(180, 100%, 20%);
+
   /* Tom ciano/neon sutil */
-  --color-glow-mouth: hsl(340, 100%, 75%);
+  --color-glow-mouth: hsl(300, 100%, 70%);
+  --color-glow-textMouth: hsl(300, 100%, 40%);
+
   /* Tom rosa/comunicação */
-  --color-glow-hair: hsl(280, 100%, 70%);
+  --color-glow-hair: hsl(250, 100%, 70%);
+  --color-glow-textHair: hsl(250, 100%, 50%);
+
   /* Tom roxo/criatividade */
 
   /* Tipografia */
