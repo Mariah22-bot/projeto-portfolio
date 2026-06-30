@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import imagemCentral from "../../../assets/images/imagem-central.png";
 
-export const InteractiveContainer: React.FC = () => {
+export const InteractiveContainer = () => {
     const [hintActive, setHintActive] = useState(false);
     const [isHairHovered, setIsHairHovered] = useState(false);
     const [isEyeHovered, setIsEyeHovered] = useState(false);
@@ -16,8 +16,7 @@ export const InteractiveContainer: React.FC = () => {
     }, []);
 
     return (
-        <main className="flex min-h-screen w-full items-center justify-center bg-(--color-background) p-4 md:p-8 overflow-hidden">
-
+        <div className="flex w-full items-center justify-center">
             {/* Container Pai: Limita o tamanho máximo na tela */}
             <div className="w-full max-w-150 aspect-square max-h-[85vh] animate-fade-in">
 
@@ -418,6 +417,6 @@ export const InteractiveContainer: React.FC = () => {
 
                 </svg>
             </div>
-        </main>
+        </div>
     );
 };

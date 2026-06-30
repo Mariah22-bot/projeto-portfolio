@@ -1,13 +1,13 @@
-import { Header } from './components/Layout/Header'
+import { Main } from './components/Layout/Main'
+import { Menu } from './components/Layout/Menu'
 import { InteractiveContainer } from './components/Layout/InteractiveContainer'
 
 function App() {
-
   return (
-    <>
-      <Header></Header>
-      <InteractiveContainer></InteractiveContainer>
-    </>
+    <Main>
+      <Menu />
+      <InteractiveContainer />
+    </Main>
   )
 }
 
