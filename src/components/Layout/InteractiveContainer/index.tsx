@@ -16,10 +16,9 @@ export const InteractiveContainer = () => {
     }, []);
 
     return (
-        <div className="flex w-full items-center justify-center">
+        <div className="absolute inset-x-0 top-20 z-10 flex justify-center sm:top-16 md:top-12 lg:top-8">
             {/* Container Pai: Limita o tamanho máximo na tela */}
-            <div className="w-full max-w-150 aspect-square max-h-[85vh] animate-fade-in">
-
+            <div className="w-full max-w-[min(90vw,37.5rem)] aspect-square animate-fade-in sm:max-w-lg md:max-w-xl lg:max-w-160">
                 <svg
                     viewBox="0 0 1000 1000"
                     className="w-full h-full select-none"
@@ -206,8 +205,8 @@ export const InteractiveContainer = () => {
                                 />
                             </g>
                         </g>
-
                     </a>
+
 
                     {/* HOTSPOT DO CACHO DE CABELO CENTRAL (PROJETOS) */}
 

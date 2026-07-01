@@ -1,11 +1,11 @@
 import { Main } from './components/Layout/Main'
-import { Menu } from './components/Layout/Menu'
 import { InteractiveContainer } from './components/Layout/InteractiveContainer'
+import { Navbar } from './components/Layout/Navbar'
 
 function App() {
   return (
     <Main>
-      <Menu />
+      <Navbar />
       <InteractiveContainer />
     </Main>
   )

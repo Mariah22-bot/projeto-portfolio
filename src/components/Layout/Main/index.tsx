@@ -6,7 +6,7 @@ type MainProps = {
 
 export const Main = ({ children }: MainProps) => {
     return (
-        <main className="flex min-h-screen w-full flex-col items-center justify-center bg-(--color-background) p-4 md:p-8 overflow-hidden">
+        <main className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-hidden bg-(--color-background)sm:p-4 sm:pt-4 md:p-8 md:pt-6">
             {children}
         </main>
     );
